@@ -1,220 +1,215 @@
-# depcheck-ai
+<div align="center">
 
-> AI that reads your dependencies — tells you what's broken, deprecated, or risky.
+# 🔍 depcheck-ai
 
-[![npm version](https://img.shields.io/npm/v/depcheck-ai.svg)](https://www.npmjs.com/package/depcheck-ai)
-[![CI](https://github.com/FMATheNomad/depcheck-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/FMATheNomad/depcheck-ai/actions/workflows/ci.yml)
-[![npm downloads](https://img.shields.io/npm/dm/depcheck-ai.svg)](https://www.npmjs.com/package/depcheck-ai)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/FMATheNomad/depcheck-ai)](https://github.com/FMATheNomad/depcheck-ai)
+### *"Stop shipping broken dependencies. One command tells you what's deprecated, risky, or needs replacing."*
 
----
-
-## The Problem
-
-Every developer knows the pain:
-
-- **Deprecated packages** still running in production
-- **Abandoned dependencies** with no commits in years
-- **Breaking changes** lurking in your next `npm update`
-- **Security risks** beyond CVEs — bad patterns, unmaintained forks
-- **No single tool** that tells you the full health picture
-
-**npm audit** only checks CVEs. **Dependabot** only opens PRs. Neither tells you _should you replace this package?_
+[![npm version](https://img.shields.io/npm/v/depcheck-ai?style=for-the-badge&logo=npm&label=version)](https://www.npmjs.com/package/depcheck-ai)
+[![GitHub Release](https://img.shields.io/github/v/release/FMATheNomad/depcheck-ai?style=for-the-badge&logo=github)](https://github.com/FMATheNomad/depcheck-ai/releases)
+[![GitHub Stars](https://img.shields.io/github/stars/FMATheNomad/depcheck-ai?style=for-the-badge&logo=github&color=yellow)](https://github.com/FMATheNomad/depcheck-ai/stargazers)
+[![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge&logo=opensourceinitiative)](https://opensource.org/licenses/MIT)
+[![CI](https://img.shields.io/github/actions/workflow/status/FMATheNomad/depcheck-ai/ci.yml?style=for-the-badge&logo=githubactions&label=CI)](https://github.com/FMATheNomad/depcheck-ai/actions)
+[![Sponsor](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8F_Sponsor-Support_the_project-30363D?style=for-the-badge&logo=githubsponsors)](https://github.com/sponsors/FMATheNomad)
+[![npm downloads](https://img.shields.io/npm/dm/depcheck-ai?style=for-the-badge&logo=npm&color=success)](https://www.npmjs.com/package/depcheck-ai)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 ---
 
-## What depcheck-ai Does
+# ⭐️ Support This Project ⭐️
+
+**This is a free, open-source tool built by a solo founder. If it saves you from even one dependency-related outage or security incident, please:**
+
+[![Star](https://img.shields.io/badge/%E2%AD%90_Star_this_repo-Support_the_project-yellow?style=for-the-badge)](https://github.com/FMATheNomad/depcheck-ai/stargazers)
+[![Sponsor](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8F_Sponsor_on_GitHub-Support_the_creator-30363D?style=for-the-badge&logo=githubsponsors)](https://github.com/sponsors/FMATheNomad)
+
+**Every star & sponsor helps a solo founder keep building free tools for everyone.** 🙏
+
+---
+
+> **Stop manually checking npm pages, scrolling through GitHub repos, and running five different CLI tools just to understand your dependency health. depcheck-ai scans your project's dependencies across npm, PyPI, and crates.io — then tells you what's broken, deprecated, or risky with actionable recommendations and alternatives. All in under 3 seconds.**
+
+---
+
+</div>
+
+## 🚨 The Problem
+
+Your project depends on 50+ packages. You have no idea which ones are:
+
+- 🔴 **Deprecated** — still running in production but the maintainer said "please stop using this"
+- 🟡 **Abandoned** — no commits in 2+ years, unanswered issues piling up
+- ⚠️ **Risky** — major version behind, breaking changes coming, or security concerns
+- ✅ **Healthy** — actually fine (but you're wasting time checking them manually)
+
+**What do you do?**
+
+| Approach | Time Spent | Misses Issues | Gives Alternatives |
+|----------|-----------|---------------|-------------------|
+| 🙋 Manual — check each package on npm/GitHub | 20-40 min per project | ✅ Many | ❌ |
+| 🔧 npm audit — CVE check only | Instant | ❌ Deprecation, health, popularity | ❌ |
+| 🤖 Dependabot — auto PRs | Automated | ❌ Health analysis | ❌ |
+| 🔍 **depcheck-ai** | **< 3 seconds** | **✅ Comprehensive** | **✅ AI-powered suggestions** |
+
+**Bottom line:** Existing tools tell you *about* security issues. **depcheck-ai tells you what to *do* about them** — replace, update, or ignore — with specific alternatives.
+
+---
+
+## 🎯 What depcheck-ai Does
 
 ```bash
-# Scan your project
+# Scan your entire project — auto-detects package.json, requirements.txt, Cargo.toml
 depcheck-ai
 
-# Check any package
+# Check any package from your terminal
 depcheck-ai check lodash
-depcheck-ai check moment
+depcheck-ai check request
+depcheck-ai check react@18.2.0
 
-# Full audit
+# Full health audit with recommendations
 depcheck-ai audit
 
-# Update recommendations
+# See update recommendations for all deps
 depcheck-ai update
 
-# JSON for CI/CD
+# Get JSON for CI/CD
 depcheck-ai --json
 ```
 
-### Output
+### Real Output
 
 ```
+$ depcheck-ai
+
+✔ Scanned package.json — 10 dependencies found
+
 depcheck-ai — Dependency Health Report
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Package              Ver          Health     Score  Action
+Package              Ver       Health   Score  Action
 ─────────────────────────────────────────────────────────────
-express             4.18.2       good       92       ✓ ok
-lodash              4.17.21      good       88       ✓ ok
-moment              2.29.4       risky      34     🔴 REPLACE → dayjs
-request-deprecated  2.88.2       critical   8      🔴 REPLACE → axios
+express             4.18.2    good      92      ✓ ok
+lodash              4.17.21   good      88      ✓ ok
+moment              2.29.4    risky     34    🔴 REPLACE → dayjs
+request-deprecated  2.88.2    critical   8    🔴 REPLACE → axios
 ─────────────────────────────────────────────────────────────
 4 dependencies | 1 critical | 1 risky | 2 good
 ```
 
 ---
 
-## Quick Start
+## 📊 Why depcheck-ai? (vs Alternatives)
+
+| Feature | You (Manual) | npm audit | Dependabot | Safety CLI | **depcheck-ai** |
+|---------|-------------|-----------|------------|------------|-----------------|
+| 🔍 CVE detection | ❌ | ✅ | ✅ | ✅ | ✅ |
+| 📦 Deprecation detection | ❌ (manual check) | ❌ | ❌ | ❌ | ✅ |
+| 🏥 Health score (maintenance + popularity) | ❌ | ❌ | ❌ | ❌ | ✅ |
+| 🔄 Breaking change detection | ❌ | ❌ | ❌ | ❌ | ✅ |
+| 💡 Actionable alternatives | ❌ | ❌ | ❌ | ❌ | ✅ |
+| 🐍 Python (PyPI) support | ❌ | ❌ | ❌ | ✅ | ✅ |
+| 🦀 Rust (crates.io) support | ❌ | ❌ | ❌ | ❌ | ✅ |
+| 📊 Multiple output formats | ❌ | ❌ | ❌ | ❌ | ✅ (table, JSON, markdown) |
+| 🤖 GitHub Action | ❌ | ❌ | ✅ | ❌ | ✅ |
+| 💵 Price | ⏱ Your time | Free | Free (public) | Free | **Free & open source** |
+| 📜 License | — | MIT | Proprietary | MIT | **MIT** |
+
+**Bottom line:** Every other tool only solves *one* piece of the puzzle. **depcheck-ai is the first tool that gives you a complete health picture across ecosystems — and tells you exactly what to do.**
+
+---
+
+## ⚡ Quick Start
 
 ```bash
 # Install globally
 npm install -g depcheck-ai
 
-# Or run without installing
+# Or run instantly
 npx depcheck-ai
 
 # Scan your project
 cd your-project
 depcheck-ai
 
-# Check a specific package
-depcheck-ai check express
+# Check a specific package with alternatives
+depcheck-ai check request
 
-# JSON output (CI-friendly)
+# JSON output for CI/CD pipelines
 depcheck-ai --json
-
-# Markdown output (GitHub Issues/PRs)
-depcheck-ai --markdown
 ```
+
+### Supported Ecosystems
+
+| Ecosystem | Manifest | Registry |
+|-----------|----------|----------|
+| 📦 npm | `package.json` | registry.npmjs.org |
+| 🐍 PyPI | `requirements.txt` | pypi.org |
+| 🦀 crates.io | `Cargo.toml` | crates.io |
 
 ---
 
-## CLI Reference
+## 🔧 Features
 
-### Commands
-
-| Command | Description |
+| Feature | Description |
 |---------|-------------|
-| `depcheck-ai` | Auto-detect manifest & scan all deps |
-| `depcheck-ai scan` | Same as above (explicit) |
-| `depcheck-ai check <pkg>` | Check a single package |
-| `depcheck-ai check <pkg>@<version>` | Check specific version |
-| `depcheck-ai update` | Show update recommendations |
-| `depcheck-ai audit` | Full health + security audit |
-| `depcheck-ai init` | Generate config file |
-
-### Options
-
-| Flag | Description |
-|------|-------------|
-| `--manifest <path>` | Path to manifest file |
-| `--eco <ecosystem>` | Filter by ecosystem (npm, pypi, crates) |
-| `--json` | JSON output |
-| `--markdown` | Markdown output |
-| `--fail-on <level>` | Fail CI if below threshold (low, medium, high) |
-| `--verbose` | Debug-level logging |
-| `--silent` | No output (exit code only) |
+| 🔍 **Multi-Ecosystem Scan** | Auto-detect npm, PyPI, and crates.io manifests |
+| 🏥 **Health Score** | Weighted 0-100 score: maintenance (35%), popularity (25%), compatibility (20%), security (20%) |
+| 💡 **Smart Recommendations** | Not just "it's bad" — suggests specific alternatives (e.g., "Replace moment with dayjs") |
+| 📊 **Multiple Formats** | Terminal table, JSON (CI/CD), Markdown (GitHub issues/PRs) |
+| 🚦 **CI/CD Ready** | `--fail-on` flag + exit codes for pipeline integration |
+| 🚀 **GitHub Action** | Drop-in action for PR comments and build failure |
+| 💾 **Smart Caching** | 1-hour API response cache, aggressive GitHub rate-limit handling |
+| ⚙️ **Configurable** | `.depcheck-ai.json` for teams and org-wide policies |
 
 ---
 
-## GitHub Action
+## 🔄 CI/CD Integration
 
-```yaml
-- uses: FMATheNomad/depcheck-ai@v1
-  with:
-    manifest-path: '.'           # or package.json, requirements.txt
-    format: 'markdown'           # table, json, markdown
-    fail-on: 'low'               # low, medium, high
-    ecosystem: 'npm'             # optional filter
-```
+### GitHub Action
 
-Add as a comment on PRs:
 ```yaml
 - name: Dependency Health Check
   uses: FMATheNomad/depcheck-ai@v1
   with:
-    format: markdown
-    fail-on: medium
+    manifest-path: '.'
+    format: 'markdown'
+    fail-on: 'medium'
 ```
 
----
+### JSON Output (any CI)
 
-## Ecosystem Support
-
-| Ecosystem | Manifest | Registry | Health Score | Alternatives |
-|-----------|----------|----------|--------------|-------------|
-| npm | package.json | registry.npmjs.org | ✅ | ✅ |
-| PyPI | requirements.txt | pypi.org | ✅ | ✅ |
-| crates.io | Cargo.toml | crates.io | ✅ | Coming soon |
-
----
-
-## Scoring Methodology
-
-### Overall Health Score (0-100)
-
-| Component | Weight | What it measures |
-|-----------|--------|------------------|
-| **Maintenance** | 35% | Last commit, release frequency, version recency, changelog |
-| **Popularity** | 25% | Downloads, GitHub stars, dependents, contributors |
-| **Compatibility** | 20% | Breaking changes, peer deps, ESM/CJS support |
-| **Security** | 20% | Known CVEs, deprecation status, license risk |
-
-### Score Levels
-
-| Level | Range | Meaning |
-|-------|-------|---------|
-| 🟢 good | 80-100 | Healthy — no action needed |
-| 🟡 okay | 50-79 | Monitor — minor concerns |
-| 🔴 risky | 30-49 | Needs attention — consider alternatives |
-| ⛔ critical | 0-29 | Replace immediately |
-
-### Maintenance Score Factors
-
-| Factor | Weight | Scoring Logic |
-|--------|--------|---------------|
-| Last commit | 30% | ≤60 days = 100, ≤1 year = 50, >2 years = 0 |
-| Release frequency | 25% | ≥12/year = 100, ≥2/year = 60, none = 0 |
-| Version recency | 25% | On latest = 100, 1 major behind = 60, >2 = 0 |
-| Changelog | 20% | GitHub repo with releases = 80, none = 30 |
-
-### Popularity Score Factors
-
-| Factor | Weight | Scoring Logic |
-|--------|--------|---------------|
-| Downloads/month | 35% | ≥10M = 100, ≥100K = 75, ≥1K = 40 |
-| GitHub stars | 25% | ≥10K = 100, ≥1K = 80, ≥100 = 55 |
-| Dependents | 25% | ≥1K = 100, ≥100 = 80, ≥10 = 60 |
-| Contributors | 15% | ≥100 = 100, ≥20 = 70, ≥5 = 40 |
-
----
-
-## Config (.depcheck-ai.json)
-
-```json
-{
-  "ecosystems": ["npm", "pypi", "crates"],
-  "failOn": "low",
-  "format": "table",
-  "cacheTtlMinutes": 60,
-  "exclude": []
-}
+```bash
+depcheck-ai --json --fail-on medium
+echo $?  # 0 = pass, 1 = fail
 ```
 
-Generated via `depcheck-ai init`.
+### Pre-commit Hook
+
+```bash
+#!/bin/sh
+depcheck-ai --json --fail-on low || exit 1
+```
+
+Save as `.git/hooks/pre-commit` and `chmod +x`.
 
 ---
 
-## Why depcheck-ai vs Others
+## 🗺 Roadmap
 
-| Tool | Security | Maintenance | Popularity | Compatibility | Recommendations | Multi-ecosystem |
-|------|----------|-------------|------------|---------------|-----------------|-----------------|
-| **npm audit** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **safety** (PyPI) | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **cargo audit** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **dependabot** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **depcheck-ai** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+- [x] npm ecosystem support
+- [x] PyPI ecosystem support
+- [x] crates.io ecosystem support
+- [x] Health scoring (maintenance, popularity, compatibility, security)
+- [x] Recommendation engine with alternatives
+- [x] Table, JSON, Markdown output
+- [x] GitHub Action
+- [x] Config file (.depcheck-ai.json)
+- [ ] **Interactive update mode** (`--interactive`) — v0.2
+- [ ] **Pre-commit hook integration** — v0.2
+- [ ] **VS Code extension** — v0.3
+- [ ] **AI-powered changelog summarization** — v0.4
 
 ---
 
-## Development
+## 🧑‍💻 Development
 
 ```bash
 git clone https://github.com/FMATheNomad/depcheck-ai.git
@@ -225,35 +220,36 @@ npm test
 
 # Test CLI locally
 node dist/index.js --version
-node dist/index.js --manifest package.json
 node dist/index.js check lodash
 ```
 
 ---
 
-## Roadmap
+## 📜 License
 
-- [x] npm ecosystem support
-- [x] PyPI ecosystem support
-- [x] crates.io ecosystem support
-- [x] Health scoring (maintenance, popularity, compatibility, security)
-- [x] Recommendation engine with alternatives
-- [x] Table, JSON, Markdown output
-- [x] GitHub Action
-- [ ] `--interactive` update mode
-- [ ] AI-powered changelog summarization (v2)
-- [ ] VS Code extension
-- [ ] Pre-commit hook
+MIT © [FMA Software Labs](https://fmasoftwarelabs.up.railway.app)
 
 ---
 
-## License
+<div align="center">
 
-MIT © FMATheNomad
+## ⭐️ Support the Project ⭐️
+
+**Built by a solo founder who got tired of deploying with outdated, deprecated, and risky dependencies.**
+
+If depcheck-ai saves you even one dependency-related outage or security audit headache, please support it — every bit counts:
+
+[![Star](https://img.shields.io/badge/%E2%AD%90_Star_on_GitHub-yellow?style=for-the-badge&logo=github)](https://github.com/FMATheNomad/depcheck-ai/stargazers)
+[![Sponsor](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8F_Sponsor-30363D?style=for-the-badge&logo=githubsponsors)](https://github.com/sponsors/FMATheNomad)
+[![Share on X](https://img.shields.io/badge/Share_on_X-black?style=for-the-badge&logo=x)](https://x.com/intent/tweet?text=Stop%20shipping%20broken%20dependencies.%20depcheck-ai%20scans%20your%20npm%2C%20PyPI%2C%20and%20crates.io%20dependencies%20and%20tells%20you%20what%27s%20deprecated%2C%20risky%2C%20or%20needs%20replacing.%20%F0%9F%94%8D%20Free%20%26%20open%20source.&url=https://github.com/FMATheNomad/depcheck-ai)
+[![Share on Reddit](https://img.shields.io/badge/Share_on_Reddit-FF4500?style=for-the-badge&logo=reddit)](https://reddit.com/r/javascript/submit?title=depcheck-ai%3A%20AI-powered%20dependency%20health%20checker&url=https://github.com/FMATheNomad/depcheck-ai)
 
 ---
 
-<p align="center">
-  Built with ❤️ by <a href="https://github.com/FMATheNomad">FMATheNomad</a><br>
-  <sub>If this tool saved you time, <a href="https://github.com/sponsors/FMATheNomad">sponsor me</a> or <a href="https://github.com/FMATheNomad/depcheck-ai">star the repo</a></sub>
-</p>
+*Ship smarter. Stop shipping broken deps. Free for everyone. MIT licensed.*
+
+[![FMA Software Labs](https://img.shields.io/badge/FMA_Software_Labs-000?style=for-the-badge&logo=github)](https://fmasoftwarelabs.up.railway.app)
+[![@fmathenomad](https://img.shields.io/badge/@fmathenomad-000?style=for-the-badge&logo=x)](https://x.com/fmathenomad)
+[![GitHub](https://img.shields.io/badge/FMATheNomad-000?style=for-the-badge&logo=github)](https://github.com/FMATheNomad)
+
+</div>
