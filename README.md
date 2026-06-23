@@ -4,7 +4,7 @@
 
 ### *"Stop shipping broken dependencies. One command tells you what's deprecated, risky, or needs replacing."*
 
-[![npm version](https://img.shields.io/github/v/release/FMATheNomad/depcheck-ai?style=for-the-badge&logo=github&label=version)](https://github.com/FMATheNomad/depcheck-ai/pkgs/npm/depcheckai)
+[![GitHub Packages](https://img.shields.io/github/v/release/FMATheNomad/depcheck-ai?style=for-the-badge&logo=github&label=GitHub%20Packages)](https://github.com/FMATheNomad/depcheck-ai/pkgs/npm/depcheckai)
 [![GitHub Release](https://img.shields.io/github/v/release/FMATheNomad/depcheck-ai?style=for-the-badge&logo=github)](https://github.com/FMATheNomad/depcheck-ai/releases)
 [![GitHub Stars](https://img.shields.io/github/stars/FMATheNomad/depcheck-ai?style=for-the-badge&logo=github&color=yellow)](https://github.com/FMATheNomad/depcheck-ai/stargazers)
 [![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge&logo=opensourceinitiative)](https://opensource.org/licenses/MIT)
@@ -117,6 +117,12 @@ request-deprecated  2.88.2    critical   8    🔴 REPLACE → axios
 ---
 
 ## ⚡ Quick Start
+
+> **Package hosted on GitHub Packages.** Requires `.npmrc` with GitHub auth:
+> ```
+> //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+> @fmathenomad:registry=https://npm.pkg.github.com/
+> ```
 
 ```bash
 # Install globally
