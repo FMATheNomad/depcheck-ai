@@ -19,7 +19,7 @@ inputs:
     required: false
     default: ''
 runs:
-  using: 'node20'
+  using: 'node22'
   main: '../../dist/github-action/run.js'
 branding:
   icon: 'shield'
