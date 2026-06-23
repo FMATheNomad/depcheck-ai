@@ -1,5 +1,5 @@
 {
-  "name": "depcheckai",
+  "name": "@fmathenomad/depcheckai",
   "version": "0.1.0",
   "description": "One command — audit your dependencies for deprecated, risky & outdated packages across npm, PyPI & crates.io. Like npm audit meets AI-powered recommendations.",
   "keywords": [
@@ -70,6 +70,7 @@
     "url": "https://github.com/FMATheNomad/depcheck-ai.git"
   },
   "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
     "access": "public"
   }
 }

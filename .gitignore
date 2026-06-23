@@ -17,5 +17,8 @@ coverage/
 # OS
 Thumbs.db
 
+# npm
+.npmrc
+
 # Test
 junit.xml
